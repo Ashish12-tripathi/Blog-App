@@ -25,7 +25,7 @@ function MyBlogs() {
 
   const handleDelete = async (id) => {
     await axios
-      .delete(`http://localhost:4001/api/blogs/delete/${id}`, {
+      .delete(`https://blog-app-1-8j9g.onrender.com/api/blogs/delete/${id}`, {
         withCredentials: true,
       })
       .then((res) => {
