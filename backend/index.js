@@ -21,9 +21,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL,
-             "https://blog-app-three-pi-42.vercel.app"
-    ],
+    origin: "https://blog-app-three-pi-42.vercel.app",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
