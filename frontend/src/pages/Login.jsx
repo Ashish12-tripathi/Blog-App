@@ -16,11 +16,8 @@ function Login() {
     e.preventDefault();
 
     try {
-       let token = localStorage.getItem("jwt"); // <-- define token here
-        if (!token) {
-          toast.error("You are not authorized");
-          return;
-        }
+       
+        
       const { data } = await axios.post(
         "https://blog-app-1-8j9g.onrender.com/api/users/login",
         { email, password, role },
@@ -28,7 +25,7 @@ function Login() {
           withCredentials: true,
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            
           },
         }
       );
