@@ -13,7 +13,11 @@ export const AuthProvider = ({ children }) => {
     const fetchProfile = async () => {
       try {
         // token should be let type variable because its value will change in every login. (in backend also)
-        let token = localStorage.getItem("jwt"); // Retrieve the token directly from the localStorage (Go to login.jsx)
+         const token = localStorage.getItem("jwt"); // <-- define token here
+        if (!token) {
+          toast.error("You are not authorized");
+          return;
+        }
         console.log(token);
         if (token) {
           const { data } = await axios.get(
@@ -37,9 +41,17 @@ export const AuthProvider = ({ children }) => {
 
     const fetchBlogs = async () => {
       try {
+        const token = localStorage.getItem("jwt");
+        if (!token) return;
         const { data } = await axios.get(
           "https://blog-app-1-8j9g.onrender.com/api/blogs/all-blogs",
-          { withCredentials: true }
+          {
+              withCredentials: true,
+              headers: {
+                "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+              },
+            }
         );
         console.log(data);
         setBlogs(data);

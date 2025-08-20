@@ -40,6 +40,11 @@ function Register() {
     formData.append("education", education);
     formData.append("photo", photo);
     try {
+       const token = localStorage.getItem("jwt"); // <-- define token here
+        if (!token) {
+          toast.error("You are not authorized");
+          return;
+        }
       const { data } = await axios.post(
         "https://blog-app-1-8j9g.onrender.com/api/users/register",
         formData,

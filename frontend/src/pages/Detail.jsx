@@ -10,6 +10,11 @@ function Detail() {
   useEffect(() => {
     const fetchblogs = async () => {
       try {
+         const token = localStorage.getItem("jwt"); // <-- define token here
+        if (!token) {
+          toast.error("You are not authorized");
+          return;
+        }
         const { data } = await axios.get(
           `https://blog-app-1-8j9g.onrender.com/api/blogs/single-blog/${id}`,
 

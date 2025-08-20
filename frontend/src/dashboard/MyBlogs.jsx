@@ -1,18 +1,22 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function MyBlogs() {
   const navigateTo = useNavigate();
   const [myBlogs, setMyBlogs] = useState([]);
+
   useEffect(() => {
     const fetchMyBlogs = async () => {
       try {
+         const token = localStorage.getItem("jwt"); // <-- define token here
+        if (!token) {
+          toast.error("You are not authorized");
+          return;
+        }
         const { data } = await axios.get(
           "https://blog-app-1-8j9g.onrender.com/api/blogs/my-blog",
-          
           {
             withCredentials: true,
             headers: {
@@ -21,34 +25,45 @@ function MyBlogs() {
             },
           }
         );
-        console.log(data);
+
         setMyBlogs(data);
       } catch (error) {
         console.log(error);
+        toast.error("Failed to fetch your blogs");
       }
     };
+
     fetchMyBlogs();
   }, []);
 
   const handleDelete = async (id) => {
-    await axios
-      .delete(`https://blog-app-1-8j9g.onrender.com/api/blogs/delete/${id}`, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-            },
-          }
-      )
-      .then((res) => {
-        toast.success(res.data.message || "Blog deleted successfully");
-        navigateTo("/");
-        setMyBlogs((value) => value.filter((blog) => blog._id !== id));
-      })
-      .catch((error) => {
-        toast.error(error.response.message || "Failed to delete blog");
-      });
+    try {
+      const token = localStorage.getItem("jwt");
+      if (!token) {
+        toast.error("You are not authorized");
+        return;
+      }
+
+      const res = await axios.delete(
+        `https://blog-app-1-8j9g.onrender.com/api/blogs/delete/${id}`,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      toast.success(res.data.message || "Blog deleted successfully");
+      setMyBlogs((value) => value.filter((blog) => blog._id !== id));
+      navigateTo("/");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "Failed to delete blog");
+    }
   };
+
   return (
     <div>
       <div className="container mx-auto my-12 p-4">
@@ -68,12 +83,8 @@ function MyBlogs() {
                   />
                 )}
                 <div className="p-4">
-                  <span className="text-sm text-gray-600">
-                    {element.category}
-                  </span>
-                  <h4 className="text-xl font-semibold my-2">
-                    {element.title}
-                  </h4>
+                  <span className="text-sm text-gray-600">{element.category}</span>
+                  <h4 className="text-xl font-semibold my-2">{element.title}</h4>
                   <div className="flex justify-between mt-4">
                     <Link
                       to={`/blog/update/${element._id}`}

@@ -23,7 +23,12 @@ function Sidebar({ setComponent }) {
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.get(
+        const token = localStorage.getItem("jwt"); // <-- define token here
+        if (!token) {
+          toast.error("You are not authorized");
+          return;
+        }
+       const { data } = await axios.get(
         "https://blog-app-1-8j9g.onrender.com/api/users/logout",
         {
           withCredentials: true,
