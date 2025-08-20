@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 
     const fetchBlogs = async () => {
       try {
-        const token = localStorage.getItem("jwt");
+        let token = localStorage.getItem("jwt");
         if (!token) return;
         const { data } = await axios.get(
           "https://blog-app-1-8j9g.onrender.com/api/blogs/all-blogs",

@@ -23,7 +23,7 @@ function Sidebar({ setComponent }) {
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
-        const token = localStorage.getItem("jwt"); // <-- define token here
+        let token = localStorage.getItem("jwt"); // <-- define token here
         if (!token) {
           toast.error("You are not authorized");
           return;

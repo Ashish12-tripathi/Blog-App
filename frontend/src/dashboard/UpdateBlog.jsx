@@ -66,7 +66,7 @@ function UpdateBlog() {
 
     formData.append("blogImage", blogImage);
     try {
-        const token = localStorage.getItem("jwt"); // <-- define token here
+        let token = localStorage.getItem("jwt"); // <-- define token here
         if (!token) {
           toast.error("You are not authorized");
           return;
