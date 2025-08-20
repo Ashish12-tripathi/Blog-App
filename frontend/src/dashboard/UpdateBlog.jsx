@@ -28,7 +28,7 @@ function UpdateBlog() {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-         const token = localStorage.getItem("jwt"); // <-- define token here
+         let token = localStorage.getItem("jwt"); // <-- define token here
         if (!token) {
           toast.error("You are not authorized");
           return;
@@ -72,7 +72,7 @@ function UpdateBlog() {
           return;
         }
       const { data } = await axios.put(
-        `http://localhost:4001/api/blogs/update/${id}`,
+        `https://blog-app-1-8j9g.onrender.com/api/blogs/update/${id}`,
         formData,
         {
           withCredentials: true,
