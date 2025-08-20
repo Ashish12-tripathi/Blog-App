@@ -11,7 +11,7 @@ import blogRoute from "./routes/blog.route.js";
 import cors from "cors";
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT ;
 const MONGO_URL = process.env.MONOG_URI;
 
 // Middleware
