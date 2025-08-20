@@ -13,11 +13,8 @@ export const AuthProvider = ({ children }) => {
     const fetchProfile = async () => {
       try {
         // token should be let type variable because its value will change in every login. (in backend also)
-         const token = localStorage.getItem("jwt"); // <-- define token here
-        if (!token) {
-          toast.error("You are not authorized");
-          return;
-        }
+         let token = localStorage.getItem("jwt"); // <-- define token here
+        
         console.log(token);
         if (token) {
           const { data } = await axios.get(
