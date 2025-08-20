@@ -25,7 +25,13 @@ function Sidebar({ setComponent }) {
     try {
       const { data } = await axios.get(
         "https://blog-app-1-8j9g.onrender.com/api/users/logout",
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       toast.success(data.message);
        localStorage.removeItem("jwt"); // deleting token in localStorage so that if user logged out it will goes to login page

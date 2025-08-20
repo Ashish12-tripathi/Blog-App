@@ -12,7 +12,14 @@ function MyBlogs() {
       try {
         const { data } = await axios.get(
           "https://blog-app-1-8j9g.onrender.com/api/blogs/my-blog",
-          { withCredentials: true }
+          
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
         );
         console.log(data);
         setMyBlogs(data);
@@ -27,7 +34,12 @@ function MyBlogs() {
     await axios
       .delete(`https://blog-app-1-8j9g.onrender.com/api/blogs/delete/${id}`, {
         withCredentials: true,
-      })
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+            },
+          }
+      )
       .then((res) => {
         toast.success(res.data.message || "Blog deleted successfully");
         navigateTo("/");

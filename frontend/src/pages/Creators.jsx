@@ -11,6 +11,9 @@ function Creators() {
           "https://blog-app-1-8j9g.onrender.com/api/users/admins",
           {
             withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         setCreators(data.admins);

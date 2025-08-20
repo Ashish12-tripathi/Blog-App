@@ -35,6 +35,7 @@ function UpdateBlog() {
             withCredentials: true,
             headers: {
               "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`,
             },
           }
         );
@@ -67,6 +68,7 @@ function UpdateBlog() {
           withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         }
       );

@@ -37,6 +37,8 @@ function CreateBlog() {
           withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
+             
+              Authorization: `Bearer ${token}`,
           },
         }
       );

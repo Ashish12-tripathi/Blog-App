@@ -10,6 +10,9 @@ function Creator() {
         "https://blog-app-1-8j9g.onrender.com/api/users/admins",
         {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       console.log(data.admins);
